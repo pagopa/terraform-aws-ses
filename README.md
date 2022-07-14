@@ -1,2 +1,2 @@
 # terraform-aws-ses
-Terraform module to create AWS SES 
+Terraform module to create AWS SES
