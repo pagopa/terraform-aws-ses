@@ -1,8 +1,0 @@
-{
-    "Template": {
-    "TemplateName": "SampleTemplate",
-    "SubjectPart": "Your Sample Email",
-   "TextPart": "Hi {{first_name}} {{last_name}},\n\nWelcome to AWS Simple Email Service (SES) to send emails with Golang.\n\n Best,\n\nYour Friend",
-   "HtmlPart": "Hi {{first_name}} {{last_name}},<br><br>Welcome to AWS Simple Email Service (SES) to send emails with Golang. <br><br>Best,<br><br>Your Friend"
-    }
-   }
