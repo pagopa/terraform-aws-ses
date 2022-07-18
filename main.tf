@@ -65,7 +65,7 @@ resource "aws_iam_user" "ses_user" {
   path  = var.user_path
 }
 
-resouurce "aws_iam_group_membership" "ses_group" {
+resource "aws_iam_group_membership" "ses_group" {
   count = var.user_name != null ? 1 : 0
   name  = join("", [var.ses_group_name, "Membership"])
 
