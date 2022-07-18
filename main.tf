@@ -65,6 +65,18 @@ resource "aws_iam_user" "ses_user" {
   path  = var.user_path
 }
 
+resource "aws_iam_group_membership" "ses_group" {
+  count = var.user_name != null ? 1 : 0
+  name  = join("", [var.ses_group_name, "Membership"])
+
+  users = [
+    aws_iam_user.ses_user[0].name
+  ]
+
+  group = aws_iam_group.ses_users[0].name
+}
+
+
 resource "aws_iam_access_key" "ses_user" {
   count = var.user_name != null ? 1 : 0
   user  = aws_iam_user.ses_user[0].name
