@@ -5,7 +5,7 @@ Terraform module to create AWS SES
 
 ```hcl
 module "ses" {
-  source = "git::https://github.com/pagopa/terraform-aws-ses.git?ref=v1.0.0"
+  source = "git::https://github.com/pagopa/terraform-aws-ses.git?ref=v1.0.2"
   domain = "pagopa.gov.it"
 
   iam_permissions = [
