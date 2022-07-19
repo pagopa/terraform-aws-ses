@@ -1,10 +1,15 @@
 output "verification_token" {
-  value       = aws_ses_domain_identity.this.verification_token
+  value = {
+    name = "_amazonses"
+  value : aws_ses_domain_identity.this.verification_token }
   description = "Verification token. TXT record."
 }
 
 output "dkim_tokens" {
-  value       = try(aws_ses_domain_dkim.this[0].dkim_tokens, null)
+  value = [for t in try(aws_ses_domain_dkim.this[0].dkim_tokens, []) : {
+    name : format("%s._domainkey", t)
+    value : format("%s.dkim.%s.amazonses.com", t, var.aws_region)
+  }]
   description = "CNAME, dkim tokens."
 }
 
