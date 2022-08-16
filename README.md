@@ -60,6 +60,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input\_domain) | The domain name to assign to SES | `string` | n/a | yes |
+| <a name="input_iam_additional_statements"></a> [iam\_additional\_statements](#input\_iam\_additional\_statements) | Iam policy custom statements. | <pre>list(<br>    object({<br>      sid       = string<br>      actions   = list(string)<br>      resources = list(string)<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_iam_allowed_resources"></a> [iam\_allowed\_resources](#input\_iam\_allowed\_resources) | Specifies resource ARNs that are enabled to send email. Wildcards are acceptable. | `list(string)` | `[]` | no |
 | <a name="input_iam_permissions"></a> [iam\_permissions](#input\_iam\_permissions) | Permission for the Iam user. | `list(string)` | <pre>[<br>  "ses:SendRawEmail"<br>]</pre> | no |
 | <a name="input_ses_group_name"></a> [ses\_group\_name](#input\_ses\_group\_name) | The name of the IAM group to create. | `string` | n/a | yes |
