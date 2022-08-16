@@ -47,11 +47,9 @@ data "aws_iam_policy_document" "ses_policy" {
     for_each = var.iam_additional_statements
 
     content {
-      statement {
-        sid       = statement.value.sid
-        actions   = statement.value.actions
-        resources = statement.value.resources
-      }
+      sid       = statement.value.sid
+      actions   = statement.value.actions
+      resources = statement.value.resources
     }
   }
 
