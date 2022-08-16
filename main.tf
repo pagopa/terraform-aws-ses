@@ -38,9 +38,24 @@ data "aws_iam_policy_document" "ses_policy" {
   count = var.user_name != null ? 1 : 0
 
   statement {
+    sid       = "SendEmail"
     actions   = var.iam_permissions
     resources = concat(aws_ses_domain_identity.this.*.arn, var.iam_allowed_resources)
   }
+
+  dynamic "statement" {
+    for_each = var.iam_additional_statements
+
+    content {
+      statement {
+        sid       = statement.value.sid
+        actions   = statement.value.actions
+        resources = statement.value.resources
+      }
+    }
+  }
+
+
 }
 
 resource "aws_iam_group" "ses_users" {

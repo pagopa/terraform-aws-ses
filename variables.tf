@@ -40,6 +40,19 @@ variable "iam_allowed_resources" {
   default     = []
 }
 
+variable "iam_additional_statements" {
+  type = list(
+    object({
+      sid       = string
+      actions   = list(string)
+      resources = list(string)
+    })
+  )
+  default     = []
+  description = "Iam policy custom statements."
+
+}
+
 variable "ses_group_name" {
   type        = string
   description = "The name of the IAM group to create."
