@@ -64,7 +64,7 @@ No modules.
 | <a name="input_iam_additional_statements"></a> [iam\_additional\_statements](#input\_iam\_additional\_statements) | Iam policy custom statements. | <pre>list(<br>    object({<br>      sid       = string<br>      actions   = list(string)<br>      resources = list(string)<br>    })<br>  )</pre> | `[]` | no |
 | <a name="input_iam_allowed_resources"></a> [iam\_allowed\_resources](#input\_iam\_allowed\_resources) | Specifies resource ARNs that are enabled to send email. Wildcards are acceptable. | `list(string)` | `[]` | no |
 | <a name="input_iam_permissions"></a> [iam\_permissions](#input\_iam\_permissions) | Permission for the Iam user. | `list(string)` | <pre>[<br>  "ses:SendRawEmail"<br>]</pre> | no |
-| <a name="input_mail_form_domain"></a> [mail\_form\_domain](#input\_mail\_form\_domain) | Subdomain which is to be used as MAIL FROM address (Required for DMARC validation) | `string` | `null` | no |
+| <a name="input_mail_from_subdomain"></a> [mail\_from\_subdomain](#input\_mail\_from\_subdomain) | Subdomain which is to be used as MAIL FROM address (Required for DMARC validation) | `string` | `null` | no |
 | <a name="input_ses_group_name"></a> [ses\_group\_name](#input\_ses\_group\_name) | The name of the IAM group to create. | `string` | n/a | yes |
 | <a name="input_ses_group_path"></a> [ses\_group\_path](#input\_ses\_group\_path) | The IAM Path of the group to create | `string` | `"/"` | no |
 | <a name="input_user_name"></a> [user\_name](#input\_user\_name) | SES Iam user name. If null no user and group will be created. | `string` | n/a | yes |
