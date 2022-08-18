@@ -94,3 +94,9 @@ resource "aws_iam_access_key" "ses_user" {
   count = var.user_name != null ? 1 : 0
   user  = aws_iam_user.ses_user[0].name
 }
+
+resource "aws_ses_domain_mail_from" "this" {
+  count            = var.mail_form_domain != null ? 1 : 0
+  domain           = aws_ses_domain_identity.this.domain
+  mail_from_domain = join([".", var.mail_from_domain, aws_ses_domain_identity.this.domain])
+}
