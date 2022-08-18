@@ -74,4 +74,10 @@ variable "user_path" {
   type        = string
   default     = "/"
   description = "Path in which to create the user."
-} 
+}
+
+variable "mail_from_subdomain" {
+  type        = string
+  description = "Subdomain which is to be used as MAIL FROM address (Required for DMARC validation)"
+  default     = null
+}
