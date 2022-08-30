@@ -81,3 +81,17 @@ variable "mail_from_subdomain" {
   description = "Subdomain which is to be used as MAIL FROM address (Required for DMARC validation)"
   default     = null
 }
+
+variable "alarms" {
+  type = object({
+    daily_send_quota_threshold          = number
+    daily_send_quota_period             = number
+    reputation_complaint_rate_threshold = number
+    reputation_complaint_rate_period    = number
+    reputation_bounce_rate_threshold    = number
+    reputation_bounce_rate_period       = number
+
+    actions = list(string)
+  })
+  default = null
+}

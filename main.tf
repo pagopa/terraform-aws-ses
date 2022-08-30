@@ -100,3 +100,72 @@ resource "aws_ses_domain_mail_from" "this" {
   domain           = aws_ses_domain_identity.this.domain
   mail_from_domain = join(".", [var.mail_from_subdomain, aws_ses_domain_identity.this.domain])
 }
+
+## Alarms
+
+### Sendign quotas
+
+module "daily_sending_quota_alarm" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 3.0"
+
+  count               = var.alarms != null ? 1 : 0
+  alarm_name          = "ses-daily-sading-quota"
+  actions_enabled     = true
+  alarm_description   = "Daily usage approaching your sending limits."
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = var.alarms.daily_send_quota_threshold
+  period              = var.alarms.daily_send_quota_period
+  unit                = "Count"
+
+  namespace   = "AWS/SES"
+  metric_name = "Send"
+  statistic   = "Sum"
+
+  alarm_actions = var.alarms.actions
+}
+
+# The percentage of emails sent from your account that resulted in recipients reporting them as spam 
+# based on a representative volume of email.
+module "reputation_complaint_rate_alarm" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 3.0"
+
+  count               = var.alarms != null ? 1 : 0
+  alarm_name          = "ses-reputation-complaint-rate"
+  actions_enabled     = true
+  alarm_description   = "80% of emails sent from your account that resulted in recipients reporting them as spam."
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = var.alarms.reputation_complaint_rate_threshold
+  period              = var.alarms.reputation_complaint_rate_period
+  unit                = "Count"
+  namespace           = "AWS/SES"
+  metric_name         = "Reputation.ComplaintRate"
+  statistic           = "Average"
+
+  alarm_actions = var.alarms.actions
+}
+
+### The percentage of emails sent from your account that resulted in a hard bounce based on a representative volume of email.
+module "reputation_bounce_rate_alarm" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 3.0"
+
+  count               = var.alarms != null ? 1 : 0
+  alarm_name          = "ses-reputation-bounce-rate"
+  actions_enabled     = true
+  alarm_description   = "10% of emails sent from your account that resulted in hard bounce."
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  threshold           = var.alarms.reputation_bounce_rate_threshold
+  period              = var.alarms.reputation_bounce_rate_period
+  unit                = "Count"
+
+  namespace   = "AWS/SES"
+  metric_name = "Reputation.BounceRate"
+  statistic   = "Average"
+
+  alarm_actions = var.alarms.actions
+}
