@@ -37,7 +37,11 @@ module "ses" {
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_daily_sending_quota_alarm"></a> [daily\_sending\_quota\_alarm](#module\_daily\_sending\_quota\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 3.0 |
+| <a name="module_reputation_bounce_rate_alarm"></a> [reputation\_bounce\_rate\_alarm](#module\_reputation\_bounce\_rate\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 3.0 |
+| <a name="module_reputation_complaint_rate_alarm"></a> [reputation\_complaint\_rate\_alarm](#module\_reputation\_complaint\_rate\_alarm) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 3.0 |
 
 ## Resources
 
@@ -59,6 +63,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_alarms"></a> [alarms](#input\_alarms) | n/a | <pre>object({<br>    daily_send_quota_threshold          = number<br>    daily_send_quota_period             = number<br>    reputation_complaint_rate_threshold = number<br>    reputation_complaint_rate_period    = number<br>    reputation_bounce_rate_threshold    = number<br>    reputation_bounce_rate_period       = number<br><br>    actions = list(string)<br>  })</pre> | `null` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_domain"></a> [domain](#input\_domain) | The domain name to assign to SES | `string` | n/a | yes |
 | <a name="input_iam_additional_statements"></a> [iam\_additional\_statements](#input\_iam\_additional\_statements) | Iam policy custom statements. | <pre>list(<br>    object({<br>      sid       = string<br>      actions   = list(string)<br>      resources = list(string)<br>    })<br>  )</pre> | `[]` | no |
