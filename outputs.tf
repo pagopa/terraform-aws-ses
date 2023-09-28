@@ -21,3 +21,7 @@ output "ses_user_secret_access_key" {
   value     = try(aws_iam_access_key.ses_user[0].secret, null)
   sensitive = true
 }
+
+output "ses_domain_identity_arn" {
+  value = try(aws_ses_domain_identity.this.arn, null)
+}
