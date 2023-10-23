@@ -29,7 +29,7 @@ resource "aws_route53_record" "cname" {
   name    = "${element(aws_ses_domain_dkim.this.0.dkim_tokens, count.index)}._domainkey.${var.domain}"
   type    = "CNAME"
   ttl     = "600"
-  records = ["${element(aws_ses_domain_dkim.this.0.dkim_tokens, count.index)}.dkim.amazonses.com"]
+  records = [format("${element(aws_ses_domain_dkim.this.0.dkim_tokens, count.index)}.dkim.%s.amazonses.com", var.aws_region)]
 }
 
 ## Create iam group and user.
@@ -126,7 +126,7 @@ module "daily_sending_quota_alarm" {
   alarm_actions = var.alarms.actions
 }
 
-# The percentage of emails sent from your account that resulted in recipients reporting them as spam 
+# The percentage of emails sent from your account that resulted in recipients reporting them as spam
 # based on a representative volume of email.
 module "reputation_complaint_rate_alarm" {
   source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
