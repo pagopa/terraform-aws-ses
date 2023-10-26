@@ -1,11 +1,17 @@
 variable "aws_region" {
   type        = string
-  description = "AWS region"
+  description = "AWS region."
 }
 
 variable "domain" {
   type        = string
-  description = "The domain name to assign to SES"
+  description = "The domain name to assign to SES."
+}
+
+variable "dmarc_policy" {
+  type        = string
+  description = "The DMARC (TXT) record to assign to domain."
+  default     = null
 }
 
 variable "verify_domain" {
@@ -22,7 +28,7 @@ variable "zone_id" {
 
 variable "verify_dkim" {
   type        = bool
-  description = "Verify dkim"
+  description = "Verify DKIM?"
   default     = true
 }
 
@@ -31,7 +37,7 @@ variable "iam_permissions" {
   default = [
     "ses:SendRawEmail"
   ]
-  description = "Permission for the Iam user."
+  description = "Permission for the IAM user."
 }
 
 variable "iam_allowed_resources" {
@@ -49,7 +55,7 @@ variable "iam_additional_statements" {
     })
   )
   default     = []
-  description = "Iam policy custom statements."
+  description = "IAM policy custom statements."
 
 }
 
@@ -61,13 +67,13 @@ variable "ses_group_name" {
 
 variable "ses_group_path" {
   type        = string
-  description = "The IAM Path of the group to create"
+  description = "The IAM Path of the group to create."
   default     = "/"
 }
 
 variable "user_name" {
   type        = string
-  description = "SES Iam user name. If null no user and group will be created."
+  description = "SES IAM user name. If null no user and group will be created."
 }
 
 variable "user_path" {
@@ -78,7 +84,7 @@ variable "user_path" {
 
 variable "mail_from_subdomain" {
   type        = string
-  description = "Subdomain which is to be used as MAIL FROM address (Required for DMARC validation)"
+  description = "Subdomain which is to be used as MAIL FROM address."
   default     = null
 }
 
