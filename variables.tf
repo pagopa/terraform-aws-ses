@@ -1,8 +1,3 @@
-variable "aws_region" {
-  type        = string
-  description = "AWS region."
-}
-
 variable "domain" {
   type        = string
   description = "The domain name to assign to SES."

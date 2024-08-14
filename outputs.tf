@@ -5,11 +5,9 @@ output "verification_token" {
   description = "Verification token. TXT record."
 }
 
+
 output "dkim_tokens" {
-  value = [for t in try(aws_ses_domain_dkim.this[0].dkim_tokens, []) : {
-    name : format("%s._domainkey", t)
-    value : format("%s.dkim.%s.amazonses.com", t, var.aws_region)
-  }]
+  value = try(aws_ses_domain_dkim.this[0].dkim_tokens, null)
   description = "CNAME, dkim tokens."
 }
 

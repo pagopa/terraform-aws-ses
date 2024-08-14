@@ -112,15 +112,11 @@ resource "aws_ses_domain_mail_from" "this" {
 
 ## Alarms
 
-module "aws_cloudwatch" {
-  # https://github.com/terraform-aws-modules/terraform-aws-cloudwatch/releases/tag/v3.3.0
-  source = "git::github.com/terraform-aws-modules/terraform-aws-cloudwatch?ref=36270f37e92c6996906bc671570afdef365eb9f3"
-}
-
 ### Sending quotas
 
 module "daily_sending_quota_alarm" {
-  source = "./.terraform/modules/aws_cloudwatch/modules/metric-alarm/"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-cloudwatch//modules/metric-alarm?ref=235046ca1ff83ada5f9265583ed96c8b675b0468"
+
   count  = var.alarms != null ? 1 : 0
 
   alarm_name          = "ses-daily-sading-quota"
@@ -141,7 +137,7 @@ module "daily_sending_quota_alarm" {
 # The percentage of emails sent from your account that resulted in recipients reporting them as spam 
 # based on a representative volume of email.
 module "reputation_complaint_rate_alarm" {
-  source = "./.terraform/modules/aws_cloudwatch/modules/metric-alarm/"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-cloudwatch//modules/metric-alarm?ref=235046ca1ff83ada5f9265583ed96c8b675b0468"
   count  = var.alarms != null ? 1 : 0
 
   alarm_name          = "ses-reputation-complaint-rate"
@@ -161,7 +157,8 @@ module "reputation_complaint_rate_alarm" {
 ### Hard bounces
 # The percentage of emails sent from your account that resulted in a hard bounce based on a representative volume of email.
 module "reputation_bounce_rate_alarm" {
-  source = "./.terraform/modules/aws_cloudwatch/modules/metric-alarm/"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-cloudwatch//modules/metric-alarm?ref=235046ca1ff83ada5f9265583ed96c8b675b0468"
+  
   count  = var.alarms != null ? 1 : 0
 
   alarm_name          = "ses-reputation-bounce-rate"
