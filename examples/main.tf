@@ -19,8 +19,11 @@ provider "aws" {
 
 
 module "ses" {
-  source = "../"
-  domain = "pagopa.gov.it"
+  source  = "../"
+  domain  = "sandbox.pagopa.it"
+  zone_id = "Z00625051S9P4M3WNA7H0"
+
+  dmarc_policy = "v=DMARC1; p=none;"
 
   iam_permissions = [
     "ses:SendCustomVerificationEmail",
@@ -34,23 +37,3 @@ module "ses" {
 
 }
 
-output "verification_token" {
-  value = module.ses.verification_token
-}
-
-output "dkim_tokens" {
-  value = module.ses.dkim_tokens
-}
-
-output "ses_user_access_key_id" {
-  value = module.ses.ses_user_access_key_id
-}
-
-output "ses_user_secret_access_key" {
-  value     = module.ses.ses_user_secret_access_key
-  sensitive = true
-}
-
-output "ses_domain_identity_arn" {
-  value = module.ses.ses_domain_identity_arn
-}
