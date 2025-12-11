@@ -1,4 +1,5 @@
 name: Generate terraform docs
+# Scopo: generazione documentazione
 on:
   - pull_request
 jobs:
