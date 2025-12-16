@@ -10,10 +10,15 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.ref }}
 
-    - name: Render terraform docs inside the README.md and push changes back to PR branch
+    - name: Render terraform docs inside the README.md
       uses: terraform-docs/gh-actions@v1.0.0
       with:
         working-dir: .
         output-file: README.md
         output-method: inject
-        git-push: "true"
+
+    - name: Upload rendered README artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: terraform-docs-readme
+        path: README.md
