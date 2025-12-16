@@ -1,12 +1,15 @@
 name: Generate terraform docs
-# Scopo: generazione documentazione
+# This workflow is the first step in the secure documentation generation process.
+# It runs on pull_request (untrusted context), generates the documentation,
+# and uploads it as an artifact. It DOES NOT push changes.
+# The actual push is handled by the 'Push terraform docs' workflow.
 on:
   - pull_request
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.ref }}
 
@@ -18,7 +21,7 @@ jobs:
         output-method: inject
 
     - name: Upload rendered README artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: terraform-docs-readme
         path: README.md
