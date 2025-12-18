@@ -24,7 +24,19 @@ jobs:
         output-file: README.md
         output-method: inject
 
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if git diff --quiet README.md; then
+          echo "✨ No changes detected in README.md. Skipping artifact upload."
+          echo "changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "📝 Changes detected in README.md. Proceeding with artifact upload."
+          echo "changed=true" >> $GITHUB_OUTPUT
+        fi
+
     - name: Upload rendered README artifact
+      if: steps.check_changes.outputs.changed == 'true'
       # https://github.com/actions/upload-artifact/releases/tag/v6.0.0
       uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:

@@ -16,14 +16,30 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: 🔍 Check if documentation artifact was uploaded
+        id: check
+        # https://github.com/actions/github-script/releases/tag/v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+        with:
+          script: |
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ github.event.workflow_run.id }},
+            });
+            return artifacts.data.artifacts.some(a => a.name === "terraform-docs-readme");
+
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        if: steps.check.outputs.result == 'true'
+        # https://github.com/actions/checkout/releases/tag/v6.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
         with:
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
           fetch-depth: 0
 
       - name: Download artifact
+        if: steps.check.outputs.result == 'true'
         # https://github.com/actions/download-artifact/releases/tag/v7.0.0
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
         with:
@@ -32,13 +48,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit and push changes
+        if: steps.check.outputs.result == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add README.md
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update terraform docs"
-            git push
-          fi
+          echo "🚀 Changes found! Committing and pushing updated README.md."
+          git commit -am "Update terraform docs"
+          git push
