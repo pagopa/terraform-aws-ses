@@ -9,19 +9,22 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    # https://github.com/actions/checkout/releases/tag/v6.0.1
+    - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
       with:
         ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Render terraform docs inside the README.md
-      uses: terraform-docs/gh-actions@v1.0.0
+      # https://github.com/terraform-docs/gh-actions/releases/tag/v1.4.1
+      uses: terraform-docs/gh-actions@6de6da0cefcc6b4b7a5cbea4d79d97060733093c
       with:
         working-dir: .
         output-file: README.md
         output-method: inject
 
     - name: Upload rendered README artifact
-      uses: actions/upload-artifact@v4
+      # https://github.com/actions/upload-artifact/releases/tag/v6.0.0
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: terraform-docs-readme
         path: README.md

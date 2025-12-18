@@ -24,7 +24,8 @@ jobs:
           fetch-depth: 0
 
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        # https://github.com/actions/download-artifact/releases/tag/v7.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
         with:
           name: terraform-docs-readme
           run-id: ${{ github.event.workflow_run.id }}
